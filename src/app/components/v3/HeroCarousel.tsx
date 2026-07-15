@@ -1,5 +1,6 @@
-import { ChevronRight, Megaphone, CreditCard } from 'lucide-react';
+import { ChevronRight, Megaphone, CreditCard, ShieldAlert, X, Eye } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 interface HeroCarouselProps {
   language: 'BM' | 'EN';
@@ -7,6 +8,8 @@ interface HeroCarouselProps {
 
 export function HeroCarousel({ language }: HeroCarouselProps) {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [jitDismissed, setJitDismissed] = useState(false);
+  const navigate = useNavigate();
 
   // Auto-rotate carousel every 3 seconds
   useEffect(() => {
@@ -85,6 +88,51 @@ export function HeroCarousel({ language }: HeroCarouselProps) {
           ))}
         </div>
       </div>
+
+      {/* ── Just-in-Time Privacy Notice ── */}
+      {!jitDismissed && (
+        <div className="mt-3 bg-amber-50 border border-amber-200 rounded-2xl overflow-hidden">
+          <div className="flex items-start gap-3 px-4 py-3">
+            <div className="bg-amber-100 p-1.5 rounded-lg shrink-0 mt-0.5">
+              <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-bold text-amber-800 mb-0.5">
+                {language === 'BM'
+                  ? 'Notis Privasi — Makluman Tepat Masa'
+                  : 'Just-in-Time Privacy Notice'}
+              </p>
+              <p className="text-[10px] text-amber-700 leading-relaxed">
+                {language === 'BM'
+                  ? 'Pengumuman kerajaan ini mengumpul maklum balas anda bagi tujuan analisis dasar awam di bawah PDPA 2010. Data tidak dikongsi dengan pihak ketiga.'
+                  : 'This government announcement collects your feedback for public policy analysis under PDPA 2010. Data is not shared with third parties.'}
+              </p>
+              <div className="flex items-center gap-3 mt-1.5">
+                <button
+                  onClick={() => navigate('/feedback', { state: { language, tab: 'policy' } })}
+                  className="flex items-center gap-1 text-[10px] font-bold text-amber-800 underline underline-offset-2"
+                >
+                  <Eye className="w-3 h-3" />
+                  {language === 'BM' ? 'Papan Ketelusan' : 'Transparency Dashboard'}
+                </button>
+                <span className="text-amber-300">·</span>
+                <button
+                  onClick={() => setJitDismissed(true)}
+                  className="text-[10px] font-bold text-amber-800 underline underline-offset-2"
+                >
+                  {language === 'BM' ? 'Faham, Tutup' : 'Got it, Dismiss'}
+                </button>
+              </div>
+            </div>
+            <button
+              onClick={() => setJitDismissed(true)}
+              className="shrink-0 text-amber-400 hover:text-amber-600 transition-colors p-0.5"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

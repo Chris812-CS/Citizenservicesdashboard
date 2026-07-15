@@ -12,13 +12,14 @@ export function PersonalizedGreeting({ language }: PersonalizedGreetingProps) {
     greeting = currentHour < 12 ? 'Good Morning' : currentHour < 18 ? 'Good Afternoon' : 'Good Evening';
   }
   
-  const name = language === 'BM' ? 'Ahmad bin Abdullah' : 'Ahmad bin Abdullah';
+  const name = language === 'BM' ? 'Hemalata A/P Vasudavan' : 'Hemalata A/P Vasudavan';
 
   return (
     <div className="px-6 pt-6 pb-3 lg:px-0 lg:pt-4" style={{ fontFamily: 'Poppins, sans-serif' }}>
       <h1 className="text-xl font-bold text-[#003399] lg:text-2xl">
         {greeting}, {name}
       </h1>
+      <p className="text-xs text-slate-400 mt-1">MyDigital ID: 1234567890</p>
     </div>
   );
 }

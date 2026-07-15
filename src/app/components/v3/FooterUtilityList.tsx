@@ -1,30 +1,37 @@
 import { HelpCircle, Database, Bot, MessageSquare, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 interface FooterUtilityListProps {
   language: 'BM' | 'EN';
 }
 
 export function FooterUtilityList({ language }: FooterUtilityListProps) {
+  const navigate = useNavigate();
+
   const items = [
     {
       icon: <HelpCircle className="w-5 h-5 text-[#003399]" />,
       labelBM: 'Help Desk',
       labelEN: 'Help Desk',
+      onClick: () => {},
     },
     {
       icon: <Database className="w-5 h-5 text-[#003399]" />,
       labelBM: 'Sumber Data Terbuka',
       labelEN: 'Open Data Source',
+      onClick: () => navigate('/data-source', { state: { language } }),
     },
     {
       icon: <Bot className="w-5 h-5 text-[#003399]" />,
       labelBM: 'Chatbot AI',
       labelEN: 'Chatbot AI',
+      onClick: () => navigate('/chatbot', { state: { language } }),
     },
     {
       icon: <MessageSquare className="w-5 h-5 text-[#003399]" />,
       labelBM: 'Maklum Balas',
       labelEN: 'Feedback',
+      onClick: () => navigate('/feedback', { state: { language, tab: 'policy' } }),
     },
   ];
 
@@ -35,6 +42,7 @@ export function FooterUtilityList({ language }: FooterUtilityListProps) {
         {items.map((item, index) => (
           <button
             key={index}
+            onClick={item.onClick}
             className="w-full flex items-center justify-between p-4 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-b-0 lg:flex-col lg:justify-center lg:gap-3 lg:border-b-0 lg:py-6"
           >
             <div className="flex items-center gap-3 lg:flex-col lg:gap-2">
